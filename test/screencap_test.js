@@ -22,17 +22,24 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+function getNumberOfScreenshots() {
+    return grunt.file.expand('tmp/*').length;
+}
+var lastNumOfScreenshots = 0;
 exports.screencap = {
     setUp: function(done) {
         // setup here if necessary
+        lastNumOfScreenshots = getNumberOfScreenshots();
         done();
     },
     default_options: function(test) {
         test.expect(1);
 
         // Do thingies
-        test.equal(true, true);
-
+        var numberOfScreenshots = getNumberOfScreenshots();
+        test.equal(numberOfScreenshots > lastNumOfScreenshots, true, 'Should be one more screenshot in temp folder (' + numberOfScreenshots + '/' + lastNumOfScreenshots + ')');
+        lastNumOfScreenshots = numberOfScreenshots;
+        
         test.done();
     }
 };
