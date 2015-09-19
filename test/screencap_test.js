@@ -29,7 +29,6 @@ var lastNumOfScreenshots = 0;
 exports.screencap = {
     setUp: function(done) {
         // setup here if necessary
-        lastNumOfScreenshots = getNumberOfScreenshots();
         done();
     },
     default_options: function(test) {

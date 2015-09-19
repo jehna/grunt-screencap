@@ -10,7 +10,8 @@
 
 module.exports = function(grunt) {
     
-    var screenshot = require('desktop-screenshot');
+    var desktopScreenshot = require('desktop-screenshot');
+    var webcam = require('webcam-capture');
 
     grunt.registerMultiTask('screencap', 'Take automatic screenshots and webcam selfies with grunt.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
@@ -22,15 +23,19 @@ module.exports = function(grunt) {
         
         grunt.file.mkdir('tmp');
         
-        var filename = 'tmp/screenshot' + (new Date().getTime()) + '.png';
-        screenshot(filename, function(error, complete) {
+        var timestamp = new Date().getTime();
+        var filenameDesktopScreenshot = 'tmp/screenshot' + timestamp + '.png';
+        desktopScreenshot(filenameDesktopScreenshot, function(error, complete) {
             if (!error) {
-                console.log('Screenshot captured, filename: ' + filename);
+                console.log('Screenshot captured, filename: ' + filenameDesktopScreenshot);
             } else {
                 console.error(error);
             }
             done();
         });
+        
+        var filenameWebcam = 'tmp/webcam' + timestamp + '.jpg';
+        var spawn = webcam({ out: filenameWebcam });  // Todo: Patch this plugin to have a proper callback
     });
 
 };
