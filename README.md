@@ -24,61 +24,54 @@ In your project's Gruntfile, add a section named `screencap` to the data object 
 
 ```js
 grunt.initConfig({
-  screencap: {
-    options: {
-      // Task-specific options go here.
+    screencap: {
+        options: {
+            // Task-specific options go here.
+            webcam: true,
+            desktop: true
+        }
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.webcam
+Type: `Boolean`
+Default value: `true`
 
-A string value that is used to do something with whatever.
+Whether to include the webcam snap in the capture.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.desktop
+Type: `Boolean`
+Default value: `true`
 
-A string value that is used to do something else with whatever else.
+Should we capture the desktop screenshot?
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+This example takes the screenshots from both desktop and webcam:
 
 ```js
 grunt.initConfig({
-  screencap: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    screencap: {
+        options: {}
     },
-  },
 });
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+This example shows how to take sreenshots only from your desktop (a bit of a
+privacy for you, sir).
 
 ```js
 grunt.initConfig({
-  screencap: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    screencap: {
+        options: {
+            webcam: false
+        }
+    }
 });
 ```
 
