@@ -11,37 +11,32 @@
 module.exports = function(grunt) {
     
     var desktopScreenshot = require('desktop-screenshot');
-    var webcam = require('webcam-capture');
 
-    grunt.registerMultiTask('screencap', 'Take automatic screenshots and webcam selfies with grunt.', function() {
-        // Merge task-specific and/or target-specific options with these defaults.
+    grunt.registerMultiTask('screencap', 'Take automatic screenshots with grunt (OSX only).', function() {
         var options = this.options({
-            // Custom options here if any
-            webcam: true,
-            desktop: true
         });
         
-        grunt.file.mkdir('tmp');
+        if (typeof options.output !== 'string') {
+            grunt.error('No \'output\' parameter defined. Exiting...');
+            return;
+        }
+        
+        var filenameCorrection = /(.*)\.(png)?|(.*)/.exec(options.output);
+        filenameCorrection = filenameCorrection[1] ? filenameCorrection[1] : filenameCorrection[3];
         
         var timestamp = new Date().getTime();
+        var filename = filenameCorrection + timestamp + '.png';
         
-        if (options.desktop) {
-            var done = this.async();
-            var filenameDesktopScreenshot = 'tmp/screenshot' + timestamp + '.png';
-            desktopScreenshot(filenameDesktopScreenshot, function(error, complete) {
-                if (!error) {
-                    console.log('Screenshot captured, filename: ' + filenameDesktopScreenshot);
-                } else {
-                    console.error(error);
-                }
-                done();
-            });
-        }
-        
-        if (options.desktop) {
-            var filenameWebcam = 'tmp/webcam' + timestamp + '.jpg';
-            var spawn = webcam({ out: filenameWebcam });  // Todo: Patch this plugin to have a proper callback
-        }
+        var done = this.async();
+        grunt.file.write(filename, '');  // Write empty file to make sure folder exists
+        desktopScreenshot(filename, function(error, complete) {
+            if (!error) {
+                console.log('Screenshot captured, filename: ' + filename);
+            } else {
+                console.error(error);
+            }
+            done();
+        });
     });
 
 };

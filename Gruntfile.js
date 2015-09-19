@@ -25,13 +25,14 @@ module.exports = function(grunt) {
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: []
+            tests: ['tmp']
         },
 
         // Configuration to be run (and then tested).
         screencap: {
             default_options: {
                 options: {
+                    output: 'tmp/screenshot.png'
                 },
             }
         },

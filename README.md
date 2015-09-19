@@ -1,6 +1,6 @@
 # grunt-screencap
 
-> Take automatic screenshots and webcam selfies with grunt.
+> Take automatic screenshots with grunt (OSX only).
 
 ## Getting Started
 This plugin requires Grunt `~0.4.4`
@@ -26,50 +26,37 @@ In your project's Gruntfile, add a section named `screencap` to the data object 
 grunt.initConfig({
     screencap: {
         options: {
-            // Task-specific options go here.
-            webcam: true,
-            desktop: true
+            output: 'screenshots/screenshot.png',
         }
     },
+    watch: {
+        default: {
+            files: ['**/*.js'],
+            tasks: ['screencap'],
+        }
+    }
 });
 ```
 
 ### Options
 
-#### options.webcam
-Type: `Boolean`
-Default value: `true`
+#### options.output
+Type: `String`
+Requred value
 
-Whether to include the webcam snap in the capture.
-
-#### options.desktop
-Type: `Boolean`
-Default value: `true`
-
-Should we capture the desktop screenshot?
+The name of the output file to create. The plugin adds a suffix of the current
+timestamp to the filename.
 
 ### Usage Examples
 
 #### Default Options
-This example takes the screenshots from both desktop and webcam:
-
-```js
-grunt.initConfig({
-    screencap: {
-        options: {}
-    },
-});
-```
-
-#### Custom Options
-This example shows how to take sreenshots only from your desktop (a bit of a
-privacy for you, sir).
+This example takes the screenshot and saves it to the `screenshots/` folder:
 
 ```js
 grunt.initConfig({
     screencap: {
         options: {
-            webcam: false
+            output: 'screenshots/screenshot.png'
         }
     }
 });
